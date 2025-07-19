@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Input, Select, Button, Space, Tooltip } from 'antd';
 import { CloseOutlined, HolderOutlined, CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons';
-import { Draggable } from 'react-beautiful-dnd';
 import SchemaBuilder from './SchemaBuilder';
 
 const { Option } = Select;
@@ -12,9 +11,10 @@ interface SchemaRowProps {
   index: number;
   onRemove: (index: number) => void;
   getFields: () => any[];
+  dragHandleProps?: React.HTMLAttributes<HTMLDivElement>;
 }
 
-const SchemaRow: React.FC<SchemaRowProps> = ({ nestIndex, index, onRemove, getFields }) => {
+const SchemaRow: React.FC<SchemaRowProps> = ({ nestIndex, index, onRemove, getFields, dragHandleProps }) => {
   const { control, watch, formState: { errors } } = useFormContext();
   const fieldName = `${nestIndex}.${index}`;
   const field = watch(fieldName);
@@ -24,94 +24,87 @@ const SchemaRow: React.FC<SchemaRowProps> = ({ nestIndex, index, onRemove, getFi
   const fieldErrors = (errors[nestIndex] as any)?.[index];
 
   return (
-    <Draggable draggableId={field.id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          style={{
-            background: snapshot.isDragging ? '#e6f7ff' : 'none',
-            padding: '10px',
-            marginBottom: '8px',
-            borderRadius: '4px',
-            border: '1px solid #d9d9d9',
-            ...provided.draggableProps.style,
-          }}
-        >
-          <Space align="start">
-            <Tooltip title="Drag to reorder">
-              <div {...provided.dragHandleProps} style={{ cursor: 'grab', paddingTop: '5px' }}>
-                <HolderOutlined />
-              </div>
-            </Tooltip>
+    <div
+      style={{
+        background: '#fff',
+        padding: '10px',
+        marginBottom: '8px',
+        borderRadius: '4px',
+        border: '1px solid #d9d9d9',
+      }}
+    >
+      <Space align="start">
+        <Tooltip title="Drag to reorder">
+          <div {...dragHandleProps} style={{ cursor: 'grab', paddingTop: '5px' }}>
+            <HolderOutlined />
+          </div>
+        </Tooltip>
 
-            <div style={{ flex: 1 }}>
-              <Space wrap>
-                <Controller
-                  control={control}
-                  name={`${fieldName}.key`}
-                  rules={{
-                    required: 'Key is required',
-                    validate: (value) =>
-                      getFields().filter((f) => f.key === value).length <= 1 || 'Key must be unique',
-                  }}
-                  render={({ field }) => (
-                     <Input {...field} placeholder="Field Name" status={fieldErrors?.key ? 'error' : ''} />
-                  )}
-                />
-                <Controller
-                  control={control}
-                  name={`${fieldName}.type`}
-                  defaultValue="String"
-                  render={({ field }) => (
-                    <Select {...field} style={{ width: 120 }}>
-                      <Option value="String">String</Option>
-                      <Option value="Number">Number</Option>
-                      <Option value="Boolean">Boolean</Option>
-                      <Option value="Nested">Nested</Option>
-                      <Option value="Array">Array</Option>
-                    </Select>
-                  )}
-                />
-                {field.type === 'Array' && (
-                  <Controller
-                    control={control}
-                    name={`${fieldName}.arrayType`}
-                    defaultValue="String"
-                    render={({ field: arrayField }) => (
-                      <Select {...arrayField} style={{ width: 150 }}>
-                        <Option value="String">of Strings</Option>
-                        <Option value="Number">of Numbers</Option>
-                        <Option value="Boolean">of Booleans</Option>
-                        <Option value="Nested">of Nested Objects</Option>
-                      </Select>
-                    )}
-                  />
-                )}
-                <Tooltip title="Delete field">
-                  <Button icon={<CloseOutlined />} onClick={() => onRemove(index)} danger />
-                </Tooltip>
-                 {(field.type === 'Nested' || (field.type === 'Array' && field.arrayType === 'Nested')) && (
-                    <Tooltip title={isCollapsed ? 'Expand' : 'Collapse'}>
-                        <Button
-                            icon={isCollapsed ? <CaretRightOutlined /> : <CaretDownOutlined />}
-                            onClick={() => setIsCollapsed(!isCollapsed)}
-                        />
-                    </Tooltip>
-                )}
-              </Space>
-              {fieldErrors?.key && <div style={{ color: '#ff4d4f', fontSize: '12px', marginTop: '4px' }}>{fieldErrors.key.message}</div>}
-              
-              {!isCollapsed && (field.type === 'Nested' || (field.type === 'Array' && field.arrayType === 'Nested')) && (
-                <div style={{ marginLeft: '30px', marginTop: '10px', borderLeft: '2px solid #d9d9d9', paddingLeft: '15px' }}>
-                  <SchemaBuilder nestIndex={`${fieldName}.fields`} />
-                </div>
+        <div style={{ flex: 1 }}>
+          <Space wrap>
+            <Controller
+              control={control}
+              name={`${fieldName}.key`}
+              rules={{
+                required: 'Key is required',
+                validate: (value) =>
+                  getFields().filter((f) => f.key === value).length <= 1 || 'Key must be unique',
+              }}
+              render={({ field }) => (
+                <Input {...field} placeholder="Field Name" status={fieldErrors?.key ? 'error' : ''} />
               )}
-            </div>
+            />
+            <Controller
+              control={control}
+              name={`${fieldName}.type`}
+              defaultValue="String"
+              render={({ field }) => (
+                <Select {...field} style={{ width: 120 }}>
+                  <Option value="String">String</Option>
+                  <Option value="Number">Number</Option>
+                  <Option value="Boolean">Boolean</Option>
+                  <Option value="Nested">Nested</Option>
+                  <Option value="Array">Array</Option>
+                </Select>
+              )}
+            />
+            {field.type === 'Array' && (
+              <Controller
+                control={control}
+                name={`${fieldName}.arrayType`}
+                defaultValue="String"
+                render={({ field: arrayField }) => (
+                  <Select {...arrayField} style={{ width: 150 }}>
+                    <Option value="String">of Strings</Option>
+                    <Option value="Number">of Numbers</Option>
+                    <Option value="Boolean">of Booleans</Option>
+                    <Option value="Nested">of Nested Objects</Option>
+                  </Select>
+                )}
+              />
+            )}
+            <Tooltip title="Delete field">
+              <Button icon={<CloseOutlined />} onClick={() => onRemove(index)} danger />
+            </Tooltip>
+            {(field.type === 'Nested' || (field.type === 'Array' && field.arrayType === 'Nested')) && (
+              <Tooltip title={isCollapsed ? 'Expand' : 'Collapse'}>
+                <Button
+                  icon={isCollapsed ? <CaretRightOutlined /> : <CaretDownOutlined />}
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                />
+              </Tooltip>
+            )}
           </Space>
+          {fieldErrors?.key && <div style={{ color: '#ff4d4f', fontSize: '12px', marginTop: '4px' }}>{fieldErrors.key.message}</div>}
+          
+          {!isCollapsed && (field.type === 'Nested' || (field.type === 'Array' && field.arrayType === 'Nested')) && (
+            <div style={{ marginLeft: '30px', marginTop: '10px', borderLeft: '2px solid #d9d9d9', paddingLeft: '15px' }}>
+              <SchemaBuilder nestIndex={`${fieldName}.fields`} />
+            </div>
+          )}
         </div>
-      )}
-    </Draggable>
+      </Space>
+    </div>
   );
 };
 
