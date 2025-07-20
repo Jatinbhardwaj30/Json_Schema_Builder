@@ -15,27 +15,27 @@ Field Types: Support for various field types:
 
 String: For text values.
 
-Number: For numerical values.
+        Number: For numerical values.
 
-Boolean: For true/false values.
+        Boolean: For true/false values.
 
-Nested: Create nested objects to organize related fields.
+        Nested: Create nested objects to organize related fields.
 
-Array: Define arrays of strings, numbers, booleans, or even nested objects.
+        Array: Define arrays of strings, numbers, booleans, or even nested objects.
 
 Dynamic Field Management:
 
-Add Fields: Quickly add new fields to your schema.
+   -> Add Fields: Quickly add new fields to your schema.
 
-Remove Fields: Easily delete fields you no longer need.
+   ->Remove Fields: Easily delete fields you no longer need.
 
 Drag-and-Drop Reordering: Rearrange the order of your fields by simply dragging and dropping them into place.
 
 Field Validation:
 
-Required Fields: Ensure essential fields are not left empty.
+    -> Required Fields: Ensure essential fields are not left empty.
 
-Unique Keys: Prevent duplicate field names within the same level of the schema.
+    -> Unique Keys: Prevent duplicate field names within the same level of the schema.
 
 Collapse/Expand Nested Fields: Keep your workspace tidy by collapsing or expanding nested object and array fields.
 
@@ -70,9 +70,9 @@ Add Fields: Click the "Add Field" button to add a new field to your schema.
 
 Define Field Properties: For each field, you can set its:
 
-Field Name: The key for your JSON property.
+     -->   Field Name: The key for your JSON property.
 
-Type: Choose from String, Number, Boolean, Nested, or Array.
+     --> Type: Choose from String, Number, Boolean, Nested, or Array.
 
 Array Type (if Array selected): Specify the type of elements within your array (e.g., "of Strings", "of Nested Objects").
 
