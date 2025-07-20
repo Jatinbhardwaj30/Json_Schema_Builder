@@ -1,3 +1,5 @@
+About Project ->
+
 Unique JSON Schema Builder
 This is a user-friendly tool to help you build JSON schemas visually. You can easily add, remove, and reorder fields, define data types, and even create complex nested structures. The application provides a real-time preview of the JSON output that updates as you build your schema.
 
