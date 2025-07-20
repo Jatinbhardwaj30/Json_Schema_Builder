@@ -97,8 +97,8 @@ const App: React.FC = () => {
               extra={<Button danger icon={<DeleteOutlined />} onClick={handleClearAll}>Clear All</Button>}
               style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
             >
-              {/* Remove DragDropContext from here */}
               <SchemaBuilder nestIndex="schema" />
+              {                   }
             </Card>
           </Col>
           <Col xs={24} md={12}>
@@ -122,3 +122,6 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+

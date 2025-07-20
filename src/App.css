@@ -35,4 +35,95 @@
   to {
     transform: rotate(360deg);
   }
+} 
+
+  body {
+  background: #f4f6fa;
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+} 
+
+.schema-builder-card {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  border-radius: 12px;
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 24px;
 }
+
+
+.schema-row {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 16px 20px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: flex-start;
+}
+
+.schema-row:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-color: #b2b7c2;
+}
+
+.schema-row .ant-space {
+  width: 100%;
+}
+
+
+.schema-row .anticon-holder {
+  color: #b2b7c2;
+  font-size: 20px;
+  margin-right: 12px;
+  cursor: grab;
+  transition: color 0.2s;
+}
+.schema-row .anticon-holder:hover {
+  color: #1890ff;
+}
+
+.nested-schema-builder {
+  margin-left: 32px;
+  border-left: 2px dashed #e5e7eb;
+  padding-left: 16px;
+  margin-top: 10px;
+}
+
+
+.add-field-btn {
+  width: 100%;
+  margin-top: 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+
+.field-error {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+
+.json-output {
+  background: #23272f;
+  color: #f8f8f2;
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 15px;
+  max-height: 70vh;
+  overflow: auto;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+}
+
+@media (max-width: 768px) {
+  .schema-builder-card {
+    padding: 12px;
+  }
+  .json-output {
+    font-size: 13px;
+    padding: 8px;
+  }
+} 
