@@ -13,7 +13,8 @@ Real-time JSON Output: As you build your schema, you'll see a live preview of th
 
 Field Types: Support for various field types:
 
-String: For text values.
+String: 
+        For text values.
 
         Number: For numerical values.
 
